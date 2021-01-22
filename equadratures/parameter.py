@@ -37,7 +37,7 @@ class Parameter(object):
         `students-t <https://en.wikipedia.org/wiki/Student%27s_t-distribution>`_, `logistic <https://en.wikipedia.org/wiki/Log-normal_distribution>`_,
         `gumbel <https://en.wikipedia.org/wiki/Gumbel_distribution>`_, `chi <https://en.wikipedia.org/wiki/Chi_distribution>`_  and `chi-squared <https://en.wikipedia.org/wiki/Chi-squared_distribution>`_.
         If no string is provided, a ``uniform`` distribution is assumed. If the user provides data, and would like to generate orthogonal
-        polynomials (and quadrature rules) based on the data, they can set this option to be ``Analytical`` (see [1, 2]).
+        polynomials (and quadrature rules) based on the data, they can set this option to be either ``analytical`` or  ``data``.
     :param float shape_parameter_A:
         Most of the aforementioned distributions are characterized by two shape parameters. For instance, in the case of a ``gaussian`` (or ``truncated-gaussian``), this represents the mean. In the case of a beta distribution this represents the alpha value. For a ``uniform`` distribution this input is not required.
     :param float shape_parameter_B:
@@ -94,6 +94,8 @@ class Parameter(object):
         elif self.name.lower() == 'uniform':
             self.distribution = Uniform(self.lower, self.upper)
         elif self.name.lower() == 'analytical':
+            self.distribution = Analytical(self.weight_function)
+        elif self.name.lower() == 'data':
             self.distribution = Analytical(self.weight_function)
         elif self.name.lower() == 'beta':
             self.distribution = Beta(self.lower, self.upper, self.shape_parameter_A, self.shape_parameter_B)
